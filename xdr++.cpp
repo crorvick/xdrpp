@@ -125,8 +125,10 @@ XDR_Base(xdr_op op)
 bool XDR_Base::
 get(int32_t& v)
 {
-	bool ret = get(reinterpret_cast<char*>(&v), sizeof (v));
-	v = htonl(v);
+	int32_t tmp;
+	bool ret = get(reinterpret_cast<char*>(&tmp), sizeof (tmp));
+	if (ret)
+		v = htonl(tmp);
 	return ret;
 }
 
