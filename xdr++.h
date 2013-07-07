@@ -18,6 +18,12 @@ inline bool xdr(XDR* xdrs, double& v) { return xdr_double(xdrs, &v); }
 
 bool xdr(XDR* xdrs, std::string&);
 
+template <typename T>
+inline bool xdr(XDR* xdrs, const T& v)
+{
+	return xdrs->x_op == XDR_ENCODE && xdr(xdrs, const_cast<T&>(v));
+}
+
 struct XDR_Base : public XDR
 {
 	XDR_Base(xdr_op);
