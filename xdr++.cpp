@@ -8,20 +8,23 @@
 bool xdr(XDR* xdrs, std::string& s)
 {
 	char* p;
-	int32_t size;
-	char buf[BUFSIZ];
+	int32_t size, pad;
+	char buf[BUFSIZ], zeros[] = { 0, 0, 0, 0 };
 	std::ostringstream ss;
 
 	switch (xdrs->x_op) {
 	case XDR_ENCODE:
 		p = const_cast<char*>(s.c_str());
 		size = s.length();
+		pad = (size | 0x03) - size + 1;
 		return	   xdrs->x_ops->x_putint32(xdrs, &size)
-			&& xdrs->x_ops->x_putbytes(xdrs, s.c_str(), size);
+			&& xdrs->x_ops->x_putbytes(xdrs, s.c_str(), size)
+			&& xdrs->x_ops->x_putbytes(xdrs, zeros, pad);
 
 	case XDR_DECODE:
 		if (!xdrs->x_ops->x_getint32(xdrs, &size))
 			return false;
+		pad = (size | 0x03) - size + 1;
 		p = buf;
 		while (size) {
 			uint32_t sz = size > sizeof (buf) ? sizeof (buf) : size;
@@ -30,6 +33,8 @@ bool xdr(XDR* xdrs, std::string& s)
 			ss.write(p, sz);
 			size -= sz;
 		}
+		if (!xdrs->x_ops->x_getbytes(xdrs, p, pad))
+			return false;
 		s = ss.str();
 		return true;
 
