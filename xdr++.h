@@ -5,6 +5,7 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 
 inline bool xdr(XDR* xdrs, char& v) { return xdr_char(xdrs, &v); }
 inline bool xdr(XDR* xdrs, short& v) { return xdr_short(xdrs, &v); }
@@ -50,6 +51,12 @@ bool xdr(XDR* xdrs, std::vector<T>& v)
 	}
 
 	return false;
+}
+
+template <typename T, typename U>
+bool xdr(XDR* xdrs, std::pair<T, U>& p)
+{
+	return xdr(xdrs, p.first) && xdr(xdrs, p.second);
 }
 
 template <typename T>
