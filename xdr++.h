@@ -5,7 +5,7 @@
 
 #include <string>
 #include <vector>
-#include <utility>
+#include <map>
 
 inline bool xdr(XDR* xdrs, char& v) { return xdr_char(xdrs, &v); }
 inline bool xdr(XDR* xdrs, short& v) { return xdr_short(xdrs, &v); }
@@ -57,6 +57,42 @@ template <typename T, typename U>
 bool xdr(XDR* xdrs, std::pair<T, U>& p)
 {
 	return xdr(xdrs, p.first) && xdr(xdrs, p.second);
+}
+
+template <typename T, typename U>
+bool xdr(XDR* xdrs, std::map<T, U>& m)
+{
+	uint32_t size;
+	typename std::map<T, U>::iterator pos, end;
+	T key;
+
+	switch (xdrs->x_op) {
+	case XDR_ENCODE:
+		size = m.size();
+		if (!xdr(xdrs, size))
+			return false;
+		for (pos = m.begin(), end = m.end(); pos != end; ++pos) {
+			if (!xdr(xdrs, *pos))
+				return false;
+		}
+		return true;
+
+	case XDR_DECODE:
+		if (!xdr(xdrs, size))
+			return false;
+		for (uint32_t i = 0; i < size; ++i) {
+			if (!xdr(xdrs, key))
+				return false;
+			if (!xdr(xdrs, m[key]))
+				return false;
+		}
+		return true;
+
+	default:
+		break;
+	}
+
+	return false;
 }
 
 template <typename T>
