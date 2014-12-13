@@ -3,6 +3,7 @@
 #include <sstream>
 
 #include <cstdio>
+#include <cstdint>
 #include <arpa/inet.h>
 
 bool xdr(XDR* xdrs, std::string& s)
