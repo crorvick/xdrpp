@@ -63,7 +63,6 @@ template <typename T, typename U>
 bool xdr(XDR* xdrs, std::map<T, U>& m)
 {
 	uint32_t size;
-	typename std::map<T, U>::iterator pos, end;
 	T key;
 
 	switch (xdrs->x_op) {
@@ -71,8 +70,8 @@ bool xdr(XDR* xdrs, std::map<T, U>& m)
 		size = m.size();
 		if (!xdr(xdrs, size))
 			return false;
-		for (pos = m.begin(), end = m.end(); pos != end; ++pos) {
-			if (!xdr(xdrs, *pos))
+		for (auto& entry : m) {
+			if (!xdr(xdrs, entry))
 				return false;
 		}
 		return true;
