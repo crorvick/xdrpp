@@ -20,32 +20,43 @@ inline bool xdr(XDR* xdrs, double& v) { return xdr_double(xdrs, &v); }
 
 bool xdr(XDR* xdrs, std::string&);
 
+namespace detail {
+
+	template <typename Vector>
+	bool xdr_encode_vec(XDR* xdrs, Vector& vec)
+	{
+		uint32_t size = vec.size();
+		if (!xdr(xdrs, size))
+			return false;
+		for (size_t i = 0; i < size; ++i) {
+			if (!xdr(xdrs, vec[i]))
+				return false;
+		}
+		return true;
+	}
+
+	template <typename Vector>
+	bool xdr_decode_vec(XDR* xdrs, Vector& vec)
+	{
+		uint32_t size;
+		if (!xdr(xdrs, size))
+			return false;
+		vec.resize(size);
+		for (size_t i = 0; i < size; ++i) {
+			if (!xdr(xdrs, vec[i]))
+				return false;
+		}
+		return true;
+	}
+
+}  // namespace detail
+
 template <typename T>
-bool xdr(XDR* xdrs, std::vector<T>& v)
+bool xdr(XDR* xdrs, std::vector<T>& vec)
 {
-	uint32_t size;
-
 	switch (xdrs->x_op) {
-	case XDR_ENCODE:
-		size = v.size();
-		if (!xdr(xdrs, size))
-			return false;
-		for (size_t i = 0; i < size; ++i) {
-			if (!xdr(xdrs, v[i]))
-				return false;
-		}
-		return true;
-
-	case XDR_DECODE:
-		if (!xdr(xdrs, size))
-			return false;
-		v.resize(size);
-		for (size_t i = 0; i < size; ++i) {
-			if (!xdr(xdrs, v[i]))
-				return false;
-		}
-		return true;
-
+	case XDR_ENCODE: return detail::xdr_encode_vec(xdrs, vec);
+	case XDR_DECODE: return detail::xdr_decode_vec(xdrs, vec);
 	default:
 		break;
 	}
@@ -59,34 +70,45 @@ bool xdr(XDR* xdrs, std::pair<T, U>& p)
 	return xdr(xdrs, p.first) && xdr(xdrs, p.second);
 }
 
-template <typename T, typename U>
-bool xdr(XDR* xdrs, std::map<T, U>& m)
-{
-	uint32_t size;
-	T key;
+namespace detail {
 
-	switch (xdrs->x_op) {
-	case XDR_ENCODE:
-		size = m.size();
+	template <typename Map>
+	bool xdr_encode_map(XDR* xdrs, Map& map)
+	{
+		uint32_t size = map.size();
 		if (!xdr(xdrs, size))
 			return false;
-		for (auto& entry : m) {
+		for (auto& entry : map) {
 			if (!xdr(xdrs, entry))
 				return false;
 		}
 		return true;
+	}
 
-	case XDR_DECODE:
+	template <typename Map>
+	bool xdr_decode_map(XDR* xdrs, Map& map)
+	{
+		uint32_t size;
 		if (!xdr(xdrs, size))
 			return false;
 		for (uint32_t i = 0; i < size; ++i) {
+			typename Map::key_type key;
 			if (!xdr(xdrs, key))
 				return false;
-			if (!xdr(xdrs, m[key]))
+			if (!xdr(xdrs, map[key]))
 				return false;
 		}
 		return true;
+	}
 
+}  // namespace detail
+
+template <typename T, typename U>
+bool xdr(XDR* xdrs, std::map<T, U>& map)
+{
+	switch (xdrs->x_op) {
+	case XDR_ENCODE: return detail::xdr_encode_map(xdrs, map);
+	case XDR_DECODE: return detail::xdr_decode_map(xdrs, map);
 	default:
 		break;
 	}

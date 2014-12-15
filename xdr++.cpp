@@ -6,39 +6,50 @@
 #include <cstdint>
 #include <arpa/inet.h>
 
-bool xdr(XDR* xdrs, std::string& s)
-{
-	char* p;
-	int32_t size, pad;
-	char buf[BUFSIZ], zeros[] = { 0, 0, 0, 0 };
-	std::ostringstream ss;
+namespace {
 
-	switch (xdrs->x_op) {
-	case XDR_ENCODE:
-		p = const_cast<char*>(s.c_str());
-		size = s.length();
-		pad = (size | 0x03) - size + 1;
-		return	   xdrs->x_ops->x_putint32(xdrs, &size)
-			&& xdrs->x_ops->x_putbytes(xdrs, s.c_str(), size)
-			&& xdrs->x_ops->x_putbytes(xdrs, zeros, pad);
+	bool xdr_encode_str(XDR* xdrs, std::string& s)
+	{
+		int32_t size = s.length();
+		uint32_t pad = (size | 0x03) - size + 1;
+		char zeros[] = { 0, 0, 0, 0 };
 
-	case XDR_DECODE:
+		return xdrs->x_ops->x_putint32(xdrs, &size)
+		    && xdrs->x_ops->x_putbytes(xdrs, s.c_str(), size)
+		    && xdrs->x_ops->x_putbytes(xdrs, zeros, pad);
+	}
+
+	bool xdr_decode_str(XDR* xdrs, std::string& s)
+	{
+		int32_t size;
+
 		if (!xdrs->x_ops->x_getint32(xdrs, &size))
 			return false;
-		pad = (size | 0x03) - size + 1;
-		p = buf;
+
+		uint32_t pad = (size | 0x03) - size + 1;
+		char buf[BUFSIZ];
+
+		std::ostringstream ss;
 		while (size) {
 			uint32_t sz = size > sizeof (buf) ? sizeof (buf) : size;
-			if (!xdrs->x_ops->x_getbytes(xdrs, p, sz))
+			if (!xdrs->x_ops->x_getbytes(xdrs, buf, sz))
 				return false;
-			ss.write(p, sz);
+			ss.write(buf, sz);
 			size -= sz;
 		}
-		if (!xdrs->x_ops->x_getbytes(xdrs, p, pad))
+		if (!xdrs->x_ops->x_getbytes(xdrs, buf, pad))
 			return false;
 		s = ss.str();
 		return true;
+	}
 
+}  // anonymous namespace
+
+bool xdr(XDR* xdrs, std::string& s)
+{
+	switch (xdrs->x_op) {
+	case XDR_ENCODE: return xdr_encode_str(xdrs, s);
+	case XDR_DECODE: return xdr_decode_str(xdrs, s);
 	default:
 		break;
 	}
