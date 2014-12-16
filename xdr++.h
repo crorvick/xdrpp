@@ -130,6 +130,19 @@ bool xdr(XDR* xdrs, std::map<T, U>& map)
 	return false;
 }
 
+template <typename T, typename U>
+bool xdr(XDR* xdrs, std::multimap<T, U>& map)
+{
+	switch (xdrs->x_op) {
+	case XDR_ENCODE: return detail::xdr_encode_map(xdrs, map);
+	case XDR_DECODE: return detail::xdr_decode_map(xdrs, map);
+	default:
+		break;
+	}
+
+	return false;
+}
+
 template <typename T>
 inline bool xdr(XDR* xdrs, const T& v)
 {
