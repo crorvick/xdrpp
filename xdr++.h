@@ -5,6 +5,7 @@
 
 #include <string>
 #include <vector>
+#include <deque>
 #include <map>
 
 inline bool xdr(XDR* xdrs, char& v) { return xdr_char(xdrs, &v); }
@@ -57,6 +58,19 @@ bool xdr(XDR* xdrs, std::vector<T>& vec)
 	switch (xdrs->x_op) {
 	case XDR_ENCODE: return detail::xdr_encode_vec(xdrs, vec);
 	case XDR_DECODE: return detail::xdr_decode_vec(xdrs, vec);
+	default:
+		break;
+	}
+
+	return false;
+}
+
+template <typename T>
+bool xdr(XDR* xdrs, std::deque<T>& deq)
+{
+	switch (xdrs->x_op) {
+	case XDR_ENCODE: return detail::xdr_encode_vec(xdrs, deq);
+	case XDR_DECODE: return detail::xdr_decode_vec(xdrs, deq);
 	default:
 		break;
 	}
