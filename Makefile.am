@@ -1,0 +1,2 @@
+SUBDIRS = xdrpp
+ACLOCAL_AMFLAGS = -I m4
