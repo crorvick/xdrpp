@@ -1,0 +1,81 @@
+2014-12-18  Chris Rorvick  <chris@rorvick.com>
+
+	Fill in ChangeLog
+
+2014-12-18  Chris Rorvick  <chris@rorvick.com>
+
+	Prefer std::min over ternary operation
+
+	Grabbing the lesser of the two is the intent.  Use std::min to
+	show this more explicitly.
+
+2014-12-17  Chris Rorvick  <chris@rorvick.com>
+
+	Autotoolize the build
+
+	Make this a real library and place it under the MIT license.
+
+2014-12-16  Chris Rorvick  <chris@rorvick.com>
+
+	Rename xdr++ => xdrpp
+
+2014-12-16  Chris Rorvick  <chris@rorvick.com>
+
+	Add support for std::multimap
+
+2014-12-16  Chris Rorvick  <chris@rorvick.com>
+
+	Add support for std::deque
+
+2014-12-15  Chris Rorvick  <chris@rorvick.com>
+
+	Split out encode/decode logic
+
+	The encode/decode logic for vectors and maps is generic and
+	applies to other vector-like and map-like data structures.
+	Split this out so that it can be reused when other data
+	structures are added.
+
+	Also, splitting these out makes the code a tad easier to look
+	at.
+
+2014-12-13  Chris Rorvick  <chris@rorvick.com>
+
+	Include <cstdint> instead of <stdint.h>
+
+	Now that the code requires C++11 we might as well prefer the C++
+	version of this header.
+
+2014-12-13  Chris Rorvick  <chris@rorvick.com>
+
+	Use range-based for loop
+
+	Looks so much nicer!
+
+2013-07-07  Chris Rorvick  <chris@rorvick.com>
+
+	Add support for std::map.
+
+2013-07-07  Chris Rorvick  <chris@rorvick.com>
+
+	Add support for std::pair.
+
+2013-07-07  Chris Rorvick  <chris@rorvick.com>
+
+	Add support for std::vector.
+
+2013-07-07  Chris Rorvick  <chris@rorvick.com>
+
+	Pad string output to word boundary.
+
+2013-07-07  Chris Rorvick  <chris@rorvick.com>
+
+	Only modify output parameter if successful.
+
+2013-07-07  Chris Rorvick  <chris@rorvick.com>
+
+	Allow encoding of const values.
+
+2013-07-06  Chris Rorvick  <chris@rorvick.com>
+
+	C++ wrapper around XDR.
