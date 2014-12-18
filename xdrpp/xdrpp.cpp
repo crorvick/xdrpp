@@ -1,6 +1,7 @@
 #include "xdrpp.h"
 
 #include <sstream>
+#include <algorithm>
 
 #include <cstdio>
 #include <cstdint>
@@ -31,7 +32,7 @@ namespace {
 
 		std::ostringstream ss;
 		while (size) {
-			uint32_t sz = size > sizeof (buf) ? sizeof (buf) : size;
+			uint32_t sz = std::min<uint32_t>(size, sizeof (buf));
 			if (!xdrs->x_ops->x_getbytes(xdrs, buf, sz))
 				return false;
 			ss.write(buf, sz);
