@@ -11,22 +11,25 @@ namespace {
 
 	bool xdr_encode_str(XDR* xdrs, std::string& s)
 	{
-		int32_t size = s.length();
+		uint32_t size = s.length();
 		uint32_t pad = (size | 0x03) - size + 1;
 		char zeros[] = { 0, 0, 0, 0 };
 
-		return xdrs->x_ops->x_putint32(xdrs, &size)
+		int32_t ssize = size;
+
+		return xdrs->x_ops->x_putint32(xdrs, &ssize)
 		    && xdrs->x_ops->x_putbytes(xdrs, s.c_str(), size)
 		    && xdrs->x_ops->x_putbytes(xdrs, zeros, pad);
 	}
 
 	bool xdr_decode_str(XDR* xdrs, std::string& s)
 	{
-		int32_t size;
+		int32_t ssize;
 
-		if (!xdrs->x_ops->x_getint32(xdrs, &size))
+		if (!xdrs->x_ops->x_getint32(xdrs, &ssize))
 			return false;
 
+		uint32_t size = ssize;
 		uint32_t pad = (size | 0x03) - size + 1;
 		char buf[BUFSIZ];
 

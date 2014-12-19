@@ -1,3 +1,11 @@
+2014-12-19  Chris Rorvick  <chris@rorvick.com>
+
+	Use unsigned type for `size'
+
+	`size' is only signed so that it conforms to the respecitve
+	xdr_ops signatures.  Make this an unsigned variable and use a
+	copy with xdr.
+
 2014-12-18  Chris Rorvick  <chris@rorvick.com>
 
 	I am the author
