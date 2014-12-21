@@ -8,6 +8,8 @@
 #include <deque>
 #include <map>
 
+namespace xdrpp {
+
 template <typename T>
 bool xdr(XDR* xdrs, const T& v)
 {
@@ -163,5 +165,7 @@ struct XDR_Base : public XDR
 
 	virtual ~XDR_Base() {}
 };
+
+}  // namespace xdrpp
 
 #endif  /* XDRPP_H_included */

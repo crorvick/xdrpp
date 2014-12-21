@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <arpa/inet.h>
 
+namespace xdrpp {
+
 namespace {
 
 	bool xdr_encode_str(XDR* xdrs, std::string& s)
@@ -159,3 +161,5 @@ put(int32_t v)
 	v = htonl(v);
 	return put(reinterpret_cast<char*>(&v), sizeof (v));
 }
+
+}  // namespace xdrpp

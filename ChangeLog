@@ -1,5 +1,9 @@
 2014-12-21  Chris Rorvick  <chris@rorvick.com>
 
+	Move everything into `xdrpp' namespace
+
+2014-12-21  Chris Rorvick  <chris@rorvick.com>
+
 	Move const value encoder to top
 
 	When the code is added to a namespace this stopped working
