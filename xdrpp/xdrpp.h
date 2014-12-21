@@ -8,6 +8,12 @@
 #include <deque>
 #include <map>
 
+template <typename T>
+bool xdr(XDR* xdrs, const T& v)
+{
+	return xdrs->x_op == XDR_ENCODE && xdr(xdrs, const_cast<T&>(v));
+}
+
 inline bool xdr(XDR* xdrs, char& v) { return xdr_char(xdrs, &v); }
 inline bool xdr(XDR* xdrs, short& v) { return xdr_short(xdrs, &v); }
 inline bool xdr(XDR* xdrs, int& v) { return xdr_int(xdrs, &v); }
@@ -141,12 +147,6 @@ bool xdr(XDR* xdrs, std::multimap<T, U>& map)
 	}
 
 	return false;
-}
-
-template <typename T>
-inline bool xdr(XDR* xdrs, const T& v)
-{
-	return xdrs->x_op == XDR_ENCODE && xdr(xdrs, const_cast<T&>(v));
 }
 
 struct XDR_Base : public XDR

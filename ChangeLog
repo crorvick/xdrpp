@@ -1,3 +1,14 @@
+2014-12-21  Chris Rorvick  <chris@rorvick.com>
+
+	Move const value encoder to top
+
+	When the code is added to a namespace this stopped working
+	(i.e., the compiler could not figure out what to do if the
+	passed value was const.) Moving this definition to the top of
+	the header fixes the problem.  I am not sure if this is
+	resolving a real issue with regard to the spec, or if it is just
+	a weird thing with GCC.  I might try to figure this out later.
+
 2014-12-19  Chris Rorvick  <chris@rorvick.com>
 
 	Use unsigned type for `size'
