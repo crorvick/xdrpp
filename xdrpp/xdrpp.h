@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <deque>
+#include <list>
 #include <map>
 
 namespace xdrpp {
@@ -31,8 +32,8 @@ namespace detail {
 		uint32_t size = vec.size();
 		if (!xdr(xdrs, size))
 			return false;
-		for (size_t i = 0; i < size; ++i) {
-			if (!xdr(xdrs, vec[i]))
+		for (auto &e : vec) {
+			if (!xdr(xdrs, e))
 				return false;
 		}
 		return true;
@@ -45,8 +46,8 @@ namespace detail {
 		if (!xdr(xdrs, size))
 			return false;
 		vec.resize(size);
-		for (size_t i = 0; i < size; ++i) {
-			if (!xdr(xdrs, vec[i]))
+		for (auto &e : vec) {
+			if (!xdr(xdrs, e))
 				return false;
 		}
 		return true;
@@ -73,6 +74,19 @@ bool xdr(XDR* xdrs, std::deque<T>& deq)
 	switch (xdrs->x_op) {
 	case XDR_ENCODE: return detail::xdr_encode_vec(xdrs, deq);
 	case XDR_DECODE: return detail::xdr_decode_vec(xdrs, deq);
+	default:
+		break;
+	}
+
+	return false;
+}
+
+template <typename T>
+bool xdr(XDR* xdrs, std::list<T>& list)
+{
+	switch (xdrs->x_op) {
+	case XDR_ENCODE: return detail::xdr_encode_vec(xdrs, list);
+	case XDR_DECODE: return detail::xdr_decode_vec(xdrs, list);
 	default:
 		break;
 	}

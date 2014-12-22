@@ -1,5 +1,12 @@
 2014-12-22  Chris Rorvick  <chris@rorvick.com>
 
+	Add support for std::list
+
+	Using the iterator interface in the vector encode/decode logic
+	allows it to work on lists, too.
+
+2014-12-22  Chris Rorvick  <chris@rorvick.com>
+
 	Remove const-value overload
 
 	This seemed like a nice convenience (e.g., it made possible to
