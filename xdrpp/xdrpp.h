@@ -10,12 +10,6 @@
 
 namespace xdrpp {
 
-template <typename T>
-bool xdr(XDR* xdrs, const T& v)
-{
-	return xdrs->x_op == XDR_ENCODE && xdr(xdrs, const_cast<T&>(v));
-}
-
 inline bool xdr(XDR* xdrs, char& v) { return xdr_char(xdrs, &v); }
 inline bool xdr(XDR* xdrs, short& v) { return xdr_short(xdrs, &v); }
 inline bool xdr(XDR* xdrs, int& v) { return xdr_int(xdrs, &v); }
@@ -101,7 +95,10 @@ namespace detail {
 		if (!xdr(xdrs, size))
 			return false;
 		for (auto& entry : map) {
-			if (!xdr(xdrs, entry))
+			typedef typename Map::key_type KeyType;
+			if (!xdr(xdrs, const_cast<KeyType&>(entry.first)))
+				return false;
+			if (!xdr(xdrs, entry.second))
 				return false;
 		}
 		return true;

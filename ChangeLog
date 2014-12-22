@@ -1,3 +1,16 @@
+2014-12-22  Chris Rorvick  <chris@rorvick.com>
+
+	Remove const-value overload
+
+	This seemed like a nice convenience (e.g., it made possible to
+	use the overload for std::pair when encoding maps), but it is
+	also problematic. In one case it was recursing into itself,
+	causing the stack to overflow.
+
+	Remove this overload and fix up the map-encoding dependency on
+	it.  If there is a better way to do this, maybe add it back
+	later.
+
 2014-12-21  Chris Rorvick  <chris@rorvick.com>
 
 	Move everything into `xdrpp' namespace
