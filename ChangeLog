@@ -1,3 +1,13 @@
+2014-12-24  Chris Rorvick  <chris@rorvick.com>
+
+	Split header out into many
+
+	Each STL container added pulls in another standard library
+	header.  This is a waste of time when building if someone has
+	otherwise been careful to only pull in only what is needed.
+	Split the definitions out by supported container to alleviate
+	this issue.
+
 2014-12-23  Chris Rorvick  <chris@rorvick.com>
 
 	Add support for T::xdr(XDR*)
