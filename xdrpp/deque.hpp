@@ -5,11 +5,11 @@
 
 #include <deque>
 
-namespace xdrpp { namespace detail {
+namespace xdrpp { namespace impl {
 
 template <typename... Ts> struct xdrer<std::deque<Ts...> >
 	: vector_xdrer<std::deque<Ts...> > {};
 
-} }  // namespace xdrpp::detail
+} }  // namespace xdrpp::impl
 
 #endif  // XDRPP_DEQUE_HPP_included

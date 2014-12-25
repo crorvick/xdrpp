@@ -20,7 +20,7 @@ struct XDR_Base : public XDR
 	virtual ~XDR_Base() {}
 };
 
-namespace detail {
+namespace impl {
 
 	template <typename T>
 	struct xdrer
@@ -38,14 +38,14 @@ namespace detail {
 		}
 	};
 
-}  // namespace detail
+}  // namespace impl
 
 template <typename T>
 bool xdr(XDR* xdrs, T& v)
 {
 	switch (xdrs->x_op) {
-	case XDR_ENCODE: return detail::xdrer<T>::encode(xdrs, v);
-	case XDR_DECODE: return detail::xdrer<T>::decode(xdrs, v);
+	case XDR_ENCODE: return impl::xdrer<T>::encode(xdrs, v);
+	case XDR_DECODE: return impl::xdrer<T>::decode(xdrs, v);
 	default:
 		break;
 	}
@@ -53,7 +53,7 @@ bool xdr(XDR* xdrs, T& v)
 	return false;
 }
 
-namespace detail {
+namespace impl {
 
 	template <typename T, bool_t (*f)(XDR*, T*)>
 	struct xdr_wrapper

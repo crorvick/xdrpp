@@ -3,7 +3,7 @@
 
 #include "base.hpp"
 
-namespace xdrpp { namespace detail {
+namespace xdrpp { namespace impl {
 
 template <typename Map>
 struct map_xdrer
@@ -41,6 +41,6 @@ struct map_xdrer
 	}
 };
 
-} }  // namespace xdrpp::detail
+} }  // namespace xdrpp::impl
 
 #endif  // XDRPP_MAP_IMPL_HPP_included

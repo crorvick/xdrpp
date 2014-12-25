@@ -3,7 +3,7 @@
 
 #include "base.hpp"
 
-namespace xdrpp { namespace detail {
+namespace xdrpp { namespace impl {
 
 template <typename Vector>
 struct vector_xdrer
@@ -36,6 +36,6 @@ struct vector_xdrer
 	}
 };
 
-} }  // namespace xdrpp::detail
+} }  // namespace xdrpp::impl
 
 #endif  // XDRPP_VEC_IMPL_HPP_included
