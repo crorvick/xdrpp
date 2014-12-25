@@ -1,5 +1,9 @@
 2014-12-25  Chris Rorvick  <chris@rorvick.com>
 
+	Use xdrer specialization for std::pair
+
+2014-12-25  Chris Rorvick  <chris@rorvick.com>
+
 	Rename namespace: `detail' => `impl'
 
 2014-12-24  Chris Rorvick  <chris@rorvick.com>

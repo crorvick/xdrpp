@@ -5,14 +5,24 @@
 
 #include <utility>
 
-namespace xdrpp {
+namespace xdrpp { namespace impl {
 
 template <typename T, typename U>
-bool xdr(XDR* xdrs, std::pair<T, U>& p)
+struct xdrer<std::pair<T, U> >
 {
-	return xdr(xdrs, p.first) && xdr(xdrs, p.second);
-}
+	typedef std::pair<T, U> value_type;
 
-}  // namespace xdrpp
+	static bool encode(XDR* xdrs, std::pair<T, U>& p)
+	{
+		return xdr(xdrs, p.first) && xdr(xdrs, p.second);
+	}
+
+	static bool decode(XDR* xdrs, std::pair<T, U>& p)
+	{
+		return xdr(xdrs, p.first) && xdr(xdrs, p.second);
+	}
+};
+
+} }  // namespace xdrpp::impl
 
 #endif  // XDRPP_PAIR_HPP_included
