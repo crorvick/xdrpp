@@ -1,3 +1,7 @@
+2014-12-26  Chris Rorvick  <chris@rorvick.com>
+
+	Use xdrer specialization for std::string
+
 2014-12-25  Chris Rorvick  <chris@rorvick.com>
 
 	Use xdrer specialization for std::pair

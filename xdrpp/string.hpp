@@ -5,10 +5,18 @@
 
 #include <string>
 
-namespace xdrpp {
+namespace xdrpp { namespace impl {
 
-bool xdr(XDR* xdrs, std::string&);
+struct string_xdrer
+{
+	typedef std::string value_type;
 
-}  // namespace xdrpp
+	static bool encode(XDR* xdrs, std::string& s);
+	static bool decode(XDR* xdrs, std::string& s);
+};
+
+template <> struct xdrer<std::string> : string_xdrer {};
+
+} }  // namespace xdrpp::impl
 
 #endif  // XDRPP_STRING_HPP_included
