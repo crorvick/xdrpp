@@ -1,3 +1,11 @@
+2014-12-27  Chris Rorvick  <chris@rorvick.com>
+
+	Add const overload for encoding
+
+	Now that it is not overloaded for other reasons we can add the
+	const overload back without having to worry much about which
+	overload/ specialization will be matched.
+
 2014-12-26  Chris Rorvick  <chris@rorvick.com>
 
 	Use xdrer specialization for std::string

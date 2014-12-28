@@ -53,6 +53,15 @@ bool xdr(XDR* xdrs, T& v)
 	return false;
 }
 
+template <typename T>
+bool xdr(XDR* xdrs, const T& v)
+{
+	if (xdrs->x_op != XDR_ENCODE)
+		return false;
+
+	return impl::xdrer<T>::encode(xdrs, const_cast<T&>(v));
+}
+
 namespace impl {
 
 	template <typename T, bool_t (*f)(XDR*, T*)>
