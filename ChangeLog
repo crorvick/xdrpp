@@ -1,3 +1,10 @@
+2014-12-28  Chris Rorvick  <chris@rorvick.com>
+
+	Remove unnecessary const_cast
+
+	Now that an const T overload of xdr() has been added back, the
+	cast is no longer necessary.
+
 2014-12-27  Chris Rorvick  <chris@rorvick.com>
 
 	Add const overload for encoding

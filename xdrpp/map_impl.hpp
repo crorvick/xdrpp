@@ -17,7 +17,7 @@ struct map_xdrer
 			return false;
 		for (auto& entry : map) {
 			typedef typename Map::key_type KeyType;
-			if (!xdr(xdrs, const_cast<KeyType&>(entry.first)))
+			if (!xdr(xdrs, entry.first))
 				return false;
 			if (!xdr(xdrs, entry.second))
 				return false;
