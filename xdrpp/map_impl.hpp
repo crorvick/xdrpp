@@ -2,6 +2,7 @@
 #define XDRPP_MAP_IMPL_HPP_included
 
 #include "base.hpp"
+#include "pair.hpp"
 
 namespace xdrpp { namespace impl {
 
@@ -17,9 +18,7 @@ struct map_xdrer
 			return false;
 		for (auto& entry : map) {
 			typedef typename Map::key_type KeyType;
-			if (!xdr(xdrs, entry.first))
-				return false;
-			if (!xdr(xdrs, entry.second))
+			if (!xdr(xdrs, entry))
 				return false;
 		}
 		return true;

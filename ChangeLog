@@ -1,3 +1,10 @@
+2014-12-29  Chris Rorvick  <chris@rorvick.com>
+
+	Encode map entries using std::pair specialization
+
+	Now that const values can be encoded we can use the std::pair
+	logic.
+
 2014-12-28  Chris Rorvick  <chris@rorvick.com>
 
 	Remove unnecessary const_cast
