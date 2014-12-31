@@ -1,3 +1,11 @@
+2014-12-30  Chris Rorvick  <chris@rorvick.com>
+
+	Use xdr() for encoding/decoding size
+
+	The XDR::xdr_ops function takes a signed value, requiring some
+	coercing to us it for the unsigned size value.  Use our API
+	instead to clean up the code.
+
 2014-12-29  Chris Rorvick  <chris@rorvick.com>
 
 	Encode map entries using std::pair specialization

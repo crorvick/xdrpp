@@ -12,21 +12,18 @@ bool string_xdrer::encode(XDR* xdrs, std::string& s)
 	uint32_t pad = (size | 0x03) - size + 1;
 	char zeros[] = { 0, 0, 0, 0 };
 
-	int32_t ssize = size;
-
-	return xdrs->x_ops->x_putint32(xdrs, &ssize)
+	return xdr(xdrs, size)
 	    && xdrs->x_ops->x_putbytes(xdrs, s.c_str(), size)
 	    && xdrs->x_ops->x_putbytes(xdrs, zeros, pad);
 }
 
 bool string_xdrer::decode(XDR* xdrs, std::string& s)
 {
-	int32_t ssize;
+	uint32_t size;
 
-	if (!xdrs->x_ops->x_getint32(xdrs, &ssize))
+	if (!xdr(xdrs, size))
 		return false;
 
-	uint32_t size = ssize;
 	uint32_t pad = (size | 0x03) - size + 1;
 	char buf[BUFSIZ];
 
