@@ -1,3 +1,9 @@
+2015-07-11  Chris Rorvick  <chris@rorvick.com>
+
+	Prefer type aliases to typedefs
+
+	C++11 type aliases are more general than typedefs.
+
 2014-12-30  Chris Rorvick  <chris@rorvick.com>
 
 	Use xdr() for encoding/decoding size

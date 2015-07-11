@@ -10,7 +10,7 @@ namespace xdrpp { namespace impl {
 template <typename T, typename U>
 struct xdrer<std::pair<T, U> >
 {
-	typedef std::pair<T, U> value_type;
+	using value_type = std::pair<T, U>;
 
 	static bool encode(XDR* xdrs, std::pair<T, U>& p)
 	{

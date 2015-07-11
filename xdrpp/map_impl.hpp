@@ -9,7 +9,7 @@ namespace xdrpp { namespace impl {
 template <typename Map>
 struct map_xdrer
 {
-	typedef Map value_type;
+	using value_type = Map;
 
 	static bool encode(XDR* xdrs, Map& map)
 	{
@@ -17,7 +17,7 @@ struct map_xdrer
 		if (!xdr(xdrs, size))
 			return false;
 		for (auto& entry : map) {
-			typedef typename Map::key_type KeyType;
+			using KeyType = typename Map::key_type;
 			if (!xdr(xdrs, entry))
 				return false;
 		}

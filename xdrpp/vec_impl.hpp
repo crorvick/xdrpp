@@ -8,7 +8,7 @@ namespace xdrpp { namespace impl {
 template <typename Vector>
 struct vector_xdrer
 {
-	typedef Vector value_type;
+	using value_type = Vector;
 
 	static bool encode(XDR* xdrs, Vector& vec)
 	{

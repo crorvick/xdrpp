@@ -9,7 +9,7 @@ namespace xdrpp { namespace impl {
 
 struct string_xdrer
 {
-	typedef std::string value_type;
+	using value_type = std::string;
 
 	static bool encode(XDR* xdrs, std::string& s);
 	static bool decode(XDR* xdrs, std::string& s);

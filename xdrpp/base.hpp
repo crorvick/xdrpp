@@ -25,7 +25,7 @@ namespace impl {
 	template <typename T>
 	struct xdrer
 	{
-		typedef T value_type;
+		using value_type = T;
 
 		static bool encode(XDR* xdrs, T& v)
 		{
@@ -67,7 +67,7 @@ namespace impl {
 	template <typename T, bool_t (*f)(XDR*, T*)>
 	struct xdr_wrapper
 	{
-		typedef T value_type;
+		using value_type = T;
 
 		static bool encode(XDR* xdrs, T& v)
 		{
