@@ -1,0 +1,10 @@
+add_library(xdrpp
+	deque.cpp
+	list.cpp
+	map.cpp
+	multimap.cpp
+	pair.cpp
+	string.cpp
+	vector.cpp
+	xdrpp.cpp
+)

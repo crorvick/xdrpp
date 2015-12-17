@@ -1,3 +1,7 @@
+2015-12-16  Chris Rorvick  <crorvick@kcg.com>
+
+	Add basic CMake support
+
 2015-07-11  Chris Rorvick  <chris@rorvick.com>
 
 	Prefer type aliases to typedefs
