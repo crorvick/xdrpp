@@ -1,3 +1,7 @@
+2015-12-19  Chris Rorvick  <chris@rorvick.com>
+
+	Make all warnings errors
+
 2015-12-19  Chris Rorvick  <crorvick@kcg.com>
 
 	Remove unused `KeyType' typedef

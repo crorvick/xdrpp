@@ -1,4 +1,4 @@
-AM_CXXFLAGS = --std=c++11
+AM_CXXFLAGS = -std=c++11 -Wall -Werror
 lib_LTLIBRARIES = libxdrpp.la
 libxdrpp_la_SOURCES = \
 	string.cpp \

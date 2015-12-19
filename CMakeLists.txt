@@ -6,5 +6,6 @@ option(BUILD_SHARED_LIBS "Build shared library" ON)
 
 add_definitions(${CMAKE_CXX_FLAGS} "-std=c++11")
 add_definitions(${CMAKE_CXX_FLAGS} "-Wall")
+add_definitions(${CMAKE_CXX_FLAGS} "-Werror")
 
 add_subdirectory(xdrpp)
