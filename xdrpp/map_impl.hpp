@@ -17,7 +17,6 @@ struct map_xdrer
 		if (!xdr(xdrs, size))
 			return false;
 		for (auto& entry : map) {
-			using KeyType = typename Map::key_type;
 			if (!xdr(xdrs, entry))
 				return false;
 		}

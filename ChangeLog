@@ -1,3 +1,15 @@
+2015-12-19  Chris Rorvick  <crorvick@kcg.com>
+
+	Remove unused `KeyType' typedef
+
+	Commit 33628d0397c4 ("Remove unnecessary const_cast") removed
+	the use of this typedef but left definition.
+
+	Resolves GCC warning:
+
+	  warning: typedef ‘KeyType’ locally defined but not used
+	[-Wunused-local-typedefs]
+
 2015-12-16  Chris Rorvick  <crorvick@kcg.com>
 
 	Add basic CMake support
