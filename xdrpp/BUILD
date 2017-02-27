@@ -1,0 +1,26 @@
+cc_library(
+    name = "xdrpp",
+    srcs = [
+        "deque.cpp",
+        "list.cpp",
+        "map.cpp",
+        "multimap.cpp",
+        "pair.cpp",
+        "string.cpp",
+        "vector.cpp",
+        "xdrpp.cpp",
+    ],
+    hdrs = [
+        "base.hpp",
+        "deque.hpp",
+        "list.hpp",
+        "map.hpp",
+        "map_impl.hpp",
+        "multimap.hpp",
+        "pair.hpp",
+        "string.hpp",
+        "vec_impl.hpp",
+        "vector.hpp",
+        "xdrpp.hpp",
+    ],
+)
