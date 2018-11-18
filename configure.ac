@@ -10,6 +10,12 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile xdrpp/Makefile])
 
+AC_CHECK_HEADER(rpc/xdr.h, [],
+	[PKG_CHECK_MODULES([LIBTIRPC], [libtirpc],
+		[AC_DEFINE([HAVE_LIBTIRPC], [], [Use libtirpc])
+	])
+])
+
 AC_OUTPUT
 
 echo \

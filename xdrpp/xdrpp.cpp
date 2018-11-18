@@ -1,5 +1,7 @@
 #include "base.hpp"
 
+#include "config.h"
+
 #include <cstdint>
 #include <arpa/inet.h>
 
@@ -32,9 +34,15 @@ namespace {
 		return static_cast<XDR_Base*>(xdrs)->put(addr, len);
 	}
 
-	u_int xdr_getpostn_callback(const XDR* xdrs)
+#ifdef HAVE_LIBTIRPC
+# define GETPOSTN_CV_MODIFIER
+#else
+# define GETPOSTN_CV_MODIFIER const
+#endif
+
+	u_int xdr_getpostn_callback(GETPOSTN_CV_MODIFIER XDR* xdrs)
 	{
-		return static_cast<const XDR_Base*>(xdrs)->get_position();
+		return static_cast<GETPOSTN_CV_MODIFIER XDR_Base*>(xdrs)->get_position();
 	}
 
 	bool_t xdr_setpostn_callback(XDR* xdrs, u_int pos)
@@ -51,29 +59,22 @@ namespace {
 	{
 	}
 
-	bool_t xdr_getint32_callback(XDR* xdrs, int32_t* ip)
+	struct xdr_ops_initializer : XDR::xdr_ops
 	{
-		return static_cast<XDR_Base*>(xdrs)->get(*ip);
-	}
-
-	bool_t xdr_putint32_callback(XDR* xdrs, const int32_t* ip)
-	{
-		return static_cast<XDR_Base*>(xdrs)->put(*ip);
-	}
-
-	struct XDR::xdr_ops xdr_base_ops = {
-		&xdr_getlong_callback,
-		&xdr_putlong_callback,
-		&xdr_getbytes_callback,
-		&xdr_putbytes_callback,
-		&xdr_getpostn_callback,
-		&xdr_setpostn_callback,
-		&xdr_inline_callback,
-		&xdr_destroy_callback,
-		&xdr_getint32_callback,
-		&xdr_putint32_callback
+		xdr_ops_initializer()
+		{
+			x_getlong = &xdr_getlong_callback;
+			x_putlong = &xdr_putlong_callback;
+			x_getbytes = &xdr_getbytes_callback;
+			x_putbytes = &xdr_putbytes_callback;
+			x_getpostn = &xdr_getpostn_callback;
+			x_setpostn = &xdr_setpostn_callback;
+			x_inline = &xdr_inline_callback;
+			x_destroy = &xdr_destroy_callback;
+		}
 	};
 
+	xdr_ops_initializer xdr_base_ops;
 }
 
 XDR_Base::
