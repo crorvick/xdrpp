@@ -1,6 +1,8 @@
+cmake_minimum_required(VERSION 3.8)
+
 project(xdrpp)
 
-cmake_minimum_required(VERSION 2.6)
+find_package(PkgConfig REQUIRED)
 
 option(BUILD_SHARED_LIBS "Build shared library" ON)
 

@@ -1,20 +1,43 @@
+2019-02-18  Chris Rorvick  <chris@rorvick.com>
+
+	fixup CMake build, remove Bazel support
+
+	Commit ff1dcfce85b1 ("add libtirpc support to autotools build")
+	added support for libtirpc but broke the other builds in doing
+	so.  Fixup the CMake build and remove Bazel, the latter of which
+	does not support pkg-config(1).
+
+2018-11-18  Chris Rorvick  <chris@rorvick.com>
+
+	tell autotools to install headers
+
+2018-11-18  Chris Rorvick  <chris@rorvick.com>
+
+	add libtirpc support to autotools build
+
+	SunRPC was removed from glibc.  Use libtirpc if the XDR header
+	is not found in the traditional location.
+
+2017-02-26  Chris Rorvick  <chris@rorvick.com>
+
+	add Bazel build support
+
 2015-12-19  Chris Rorvick  <chris@rorvick.com>
 
 	Make all warnings errors
 
-2015-12-19  Chris Rorvick  <crorvick@kcg.com>
+2015-12-19  Chris Rorvick  <chris@rorvick.com>
 
-	Remove unused `KeyType' typedef
+	Remove unused `KeyType' type alias
 
 	Commit 33628d0397c4 ("Remove unnecessary const_cast") removed
-	the use of this typedef but left definition.
+	the use of this but left definition.
 
 	Resolves GCC warning:
 
-	  warning: typedef ‘KeyType’ locally defined but not used
-	[-Wunused-local-typedefs]
+	  warning: typedef ‘KeyType’ locally defined but not used [-Wunused-local-typedefs]
 
-2015-12-16  Chris Rorvick  <crorvick@kcg.com>
+2015-12-16  Chris Rorvick  <chris@rorvick.com>
 
 	Add basic CMake support
 
@@ -52,7 +75,7 @@
 
 	Now that it is not overloaded for other reasons we can add the
 	const overload back without having to worry much about which
-	overload/ specialization will be matched.
+	overload/specialization will be matched.
 
 2014-12-26  Chris Rorvick  <chris@rorvick.com>
 

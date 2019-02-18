@@ -1,6 +1,8 @@
 #include "base.hpp"
 
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 
 #include <cstdint>
 #include <arpa/inet.h>
